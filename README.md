@@ -1,131 +1,177 @@
-<!DOCTYPE html>
-<html lang="en">
+<style>
+  #start-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #d0e9cd;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  #start-screen h1 {
+    font-size: 2em;
+    margin-bottom: 1em;
+  }
+
+  #start-button {
+    background-color: #4b8b60;
+    color: white;
+    font-size: 1.2em;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #start-button:hover {
+    background-color: #3a6e4c;
+  }
+
+  #quiz-container {
+    display: none;
+  }
+</style>
+
+<div id="start-screen">
+  <h1>Kamu mirip OC-nya mumut yang mana yaah?</h1>
+  <button id="start-button">Start</button>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("start-button").addEventListener("click", function() {
+      document.getElementById("start-screen").style.display = "none";
+      document.getElementById("quiz-container").style.display = "block";
+    });
+  });
+</script>
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiz OC Mumut</title>
+  <title>Love Quiz - Mumut's OCs</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #d6f5d6;
-      margin: 0;
-      padding: 0;
+      background-color: #d9f2d9;
+      padding: 20px;
+      text-align: center;
     }
     .container {
       max-width: 600px;
-      margin: auto;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
       padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
     }
     .question-box {
-      background-color: #96c896;
-      padding: 20px;
+      background-color: #97cfa1;
+      border-radius: 8px;
+      padding: 15px;
       margin-bottom: 20px;
-      border-radius: 10px;
-      font-weight: bold;
     }
-    .answers button {
+    .answer {
       display: block;
-      width: 100%;
-      margin: 10px 0;
+      background-color: #ffffff;
+      border: 2px solid #5c9b66;
+      color: #333;
+      font-weight: bold;
       padding: 10px;
-      font-size: 16px;
+      margin: 10px 0;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .answer:hover {
+      background-color: #e0f2e0;
+    }
+    #start-screen, #quiz-screen, #result-screen {
+      display: none;
+    }
+    button {
+      background-color: #5c9b66;
+      color: white;
       font-weight: bold;
       border: none;
-      border-radius: 8px;
+      padding: 10px 20px;
+      border-radius: 5px;
       cursor: pointer;
-      background-color: #bce3bc;
     }
-    .start-screen, .result-screen {
-      text-align: center;
-      padding: 40px;
-    }
-    #quiz, #result {
-      display: none;
+    button:hover {
+      background-color: #4a8052;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div id="start" class="start-screen">
-      <h2>kamu mirip OC-nya mumut yang siapa yach?</h2>
+    <div id="start-screen">
+      <h1>Kamu mirip OC-nya mumut yang siapa yach?</h1>
       <button onclick="startQuiz()">Start</button>
-    </div>
-    <div id="quiz"></div>
-    <div id="result" class="result-screen"></div>
-  </div>
-  <script>
+    </div><div id="quiz-screen">
+  <div id="quiz-box"></div>
+</div>
+
+<div id="result-screen">
+  <h1>Hasil kamu adalah:</h1>
+  <p id="result-text"></p>
+</div>
+
+  </div>  <script>
     const quizData = [
       {
-        question: "kamu kalo punya crush biasanya ngapain?",
+        question: "Kamu kalau punya crush biasanya ngapain?",
         answers: [
-          { text: "biasa aja, memilih jalur langit yaitu doain dia aja", oc: "Alex" },
-          { text: "langsung pamer ke temen, ajakin dia kenalan, bahkan godain dia \"to the point aja lah\"", oc: "Xen" },
-          { text: "ngasih dia jajan, hadiah kecil, atau oleh oleh, berharap dia notice kamu", oc: "Eric" },
-          { text: "pengen ku cekik dia", oc: "Maverick" }
+          { text: "Biasa aja, memilih jalur langit yaitu doain dia aja", character: "Alex" },
+          { text: "Langsung pamer ke temen, ajakin dia kenalan, bahkan godain dia!", character: "Xen" },
+          { text: "Ngasih dia jajan, hadiah kecil, atau oleh-oleh, berharap dia notice kamu", character: "Eric" },
+          { text: "Pengen ku cekik dia", character: "Maverick" },
         ]
       },
       {
-        question: "kamu kalo sama pasangan biasanya ngapain aja??",
+        question: "Bububmu marah sama kamu!",
         answers: [
-          { text: "ngobrol, curhat, saling menyayangi, seperti couple sehat", oc: "Alex" },
-          { text: "bermesra-mesraan, cuddling, flirting, ciuman, couple freaky deh", oc: "Xen" },
-          { text: "ngedate, pergi kemana mana bareng, nonton bioskop", oc: "Eric" },
-          { text: "pokoknya selama pasangan nurut, hubungan jadi baik", oc: "Maverick" }
-        ]
-      },
-      {
-        question: "bububmu lagi freaky dan godain kamu, responmu gimana?",
-        answers: [
-          { text: "gas aja ga si", oc: "Xen" },
-          { text: "gas, cuman ga sampe lewati batas", oc: "Eric" },
-          { text: "tolak dengan lembut", oc: "Alex" },
-          { text: "kasur.", oc: "Maverick" }
-        ]
-      },
-      {
-        question: "bububmu marah sama kamu!",
-        answers: [
-          { text: "ga terima, main tangan (pukul)", oc: "Maverick" },
-          { text: "berusaha buat ngehibur dia sambil \"ya maap :(\"", oc: "Xen" },
-          { text: "marahin balik, ga lama kemudian pasti minta maap", oc: "Eric" },
-          { text: "diem sampe dia udah berhenti emosi, ga lama kemudian \"sudah marahnya? maaf ya..\"", oc: "Alex" }
+          { text: "Ga terima, main tangan (pukul)", character: "Maverick" },
+          { text: "Berusaha buat ngehibur dia sambil 'ya maap :'(", character: "Xen" },
+          { text: "Marahin balik, ga lama kemudian pasti minta maaf", character: "Eric" },
+          { text: "Diem sampe dia udah berhenti emosi, ga lama kemudian 'sudah marahnya? maaf ya..'", character: "Alex" },
         ]
       }
     ];
 
     const results = {
-      "Xen": "Kamu adalah orang yang freaky, clingy, dan dirty minded. Tapi kamu juga penuh semangat dan gampang bikin suasana jadi hidup. Kalau udah nyaman sama seseorang, kamu bisa jadi pasangan paling mesra dan lucu!",
-      "Alex": "Kamu adalah sosok tenang, penyayang, dan pengertian. Terlihat dingin dari luar, tapi perhatian banget dan rela ngalah demi orang yang disayang. Kamu pasangan ideal yang dewasa dan sabar.",
-      "Eric": "Kamu terlihat cool dan agak cuek, tapi aslinya gampang baper dan perhatian. Kamu suka nunjukin rasa sayang lewat hal kecil kayak traktir atau ngajak main bareng. Agak badut tapi manis.",
-      "Maverick": "Kamu tipe black flag: dominan, misterius, dan kadang kasar. Tapi kamu punya sisi posesif yang berarti kamu sangat protektif ke orang yang kamu sayang. Di balik kesan galakmu, ada rasa sayang yang dalam."
+      Alex: "Kamu adalah orang yang kalem dan penuh pengertian. Kamu lebih memilih jalur damai, sabar, dan penyayang. Dalam hubungan, kamu sangat peduli dan ingin menjadi pasangan terbaik.",
+      Xen: "Kamu adalah orang yang freaky, usil, dan CLINGY! Tapi justru itu yang bikin kamu seru dan dicintai. Kamu juga to the point dan percaya diri banget soal cinta!",
+      Eric: "Kamu terlihat cuek dan kadang galak, tapi sebenernya kamu perhatian dan suka kasih effort kecil yang bermakna. Kamu juga suka ngajak main dan butuh pasangan yang bisa diajak seru-seruan.",
+      Maverick: "Kamu adalah definisi BLACK FLAG. Kasar, dominan, dan cuek. Tapi ke orang yang kamu sayang, kamu bisa sangat protektif dan bucin diam-diam."
     };
 
     let currentQuestion = 0;
-    const score = {
-      "Xen": 0,
-      "Alex": 0,
-      "Eric": 0,
-      "Maverick": 0
-    };
+    let scores = { Alex: 0, Xen: 0, Eric: 0, Maverick: 0 };
 
     function startQuiz() {
-      document.getElementById("start").style.display = "none";
-      document.getElementById("quiz").style.display = "block";
+      document.getElementById('start-screen').style.display = 'none';
+      document.getElementById('quiz-screen').style.display = 'block';
       showQuestion();
     }
 
     function showQuestion() {
-      const quizEl = document.getElementById("quiz");
       const q = quizData[currentQuestion];
-      quizEl.innerHTML = `<div class='question-box'><p>${q.question}</p></div><div class='answers'>`;
-      q.answers.forEach((a, i) => {
-        quizEl.innerHTML += `<button onclick='selectAnswer("${a.oc}")'>${a.text}</button>`;
-      });
-      quizEl.innerHTML += `</div>`;
+      const quizBox = document.getElementById('quiz-box');
+      quizBox.innerHTML = `<div class="question-box"><h2>${q.question}</h2></div>` +
+        q.answers.map((a, i) => `<div class="answer" onclick="selectAnswer('${a.character}')">${a.text}</div>`).join('');
     }
 
-    function selectAnswer(oc) {
-      score[oc]++;
+    function selectAnswer(character) {
+      scores[character]++;
       currentQuestion++;
       if (currentQuestion < quizData.length) {
         showQuestion();
@@ -135,11 +181,12 @@
     }
 
     function showResult() {
-      document.getElementById("quiz").style.display = "none";
-      document.getElementById("result").style.display = "block";
-      let final = Object.entries(score).sort((a, b) => b[1] - a[1])[0][0];
-      document.getElementById("result").innerHTML = `<h2>Kamu mirip ${final}!</h2><p>${results[final]}</p>`;
+      document.getElementById('quiz-screen').style.display = 'none';
+      document.getElementById('result-screen').style.display = 'block';
+      const result = Object.entries(scores).sort((a,b) => b[1] - a[1])[0][0];
+      document.getElementById('result-text').innerText = results[result];
     }
-  </script>
-</body>
+
+    document.getElementById('start-screen').style.display = 'block';
+  </script></body>
 </html>
