@@ -1,170 +1,134 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kamu Mirip OC Siapa?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz OC Mumut</title>
   <style>
     body {
-      background-color: #d0f0c0;
-      font-family: 'Arial', sans-serif;
-      text-align: center;
-      padding: 20px;
-      color: #333;
+      font-family: Arial, sans-serif;
+      background-color: #d6f5d6;
+      margin: 0;
+      padding: 0;
     }
-    .quiz-box {
-      background: white;
-      padding: 20px;
-      border-radius: 16px;
-      max-width: 700px;
+    .container {
+      max-width: 600px;
       margin: auto;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
     }
-    h2 { color: #2d6a4f; }
-    .question { margin-bottom: 20px; font-weight: bold; }
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      border: none;
-      border-radius: 8px;
-      background-color: #95d5b2;
-      color: white;
-      cursor: pointer;
-      font-size: 15px;
+    .question-box {
+      background-color: #96c896;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+    .answers button {
       display: block;
       width: 100%;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #bce3bc;
     }
-    #result { margin-top: 30px; font-size: 1.2em; font-weight: bold; }
-    .oc-desc { text-align: left; margin-top: 20px; }
+    .start-screen, .result-screen {
+      text-align: center;
+      padding: 40px;
+    }
+    #quiz, #result {
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <div class="quiz-box">
-    <h2>Quiz: Kamu Mirip OC Siapa?</h2>
-    <div id="quiz">
-      <div class="question" id="question"></div>
-      <div id="answers"></div>
+  <div class="container">
+    <div id="start" class="start-screen">
+      <h2>kamu mirip OC-nya mumut yang siapa yach?</h2>
+      <button onclick="startQuiz()">Start</button>
     </div>
-    <div id="result"></div>
+    <div id="quiz"></div>
+    <div id="result" class="result-screen"></div>
   </div>
-
   <script>
-    const questions = [
+    const quizData = [
       {
-        q: "Kamu kalo punya crush biasanya ngapain?",
+        question: "kamu kalo punya crush biasanya ngapain?",
         answers: [
-          { text: "Biasa aja, memilih jalur langit yaitu doain dia aja", oc: "Alex" },
-          { text: "Langsung pamer ke temen, ajakin dia kenalan, bahkan godain dia \"to the point aja lah\"", oc: "Xen" },
-          { text: "Ngasih dia jajan, hadiah kecil, atau oleh-oleh, berharap dia notice kamu", oc: "Eric" },
-          { text: "Gamau ngaku kalo punya crush, padahal obsesi berat sama dia jir", oc: "Maverick" }
+          { text: "biasa aja, memilih jalur langit yaitu doain dia aja", oc: "Alex" },
+          { text: "langsung pamer ke temen, ajakin dia kenalan, bahkan godain dia \"to the point aja lah\"", oc: "Xen" },
+          { text: "ngasih dia jajan, hadiah kecil, atau oleh oleh, berharap dia notice kamu", oc: "Eric" },
+          { text: "pengen ku cekik dia", oc: "Maverick" }
         ]
       },
       {
-        q: "Hey tau ga si? Crushmu suka kamu balik loh!",
+        question: "kamu kalo sama pasangan biasanya ngapain aja??",
         answers: [
-          { text: "\"Oh, ok\"", oc: "Alex" },
-          { text: "\"MASA?! HOREEE, GAS KAN\"", oc: "Xen" },
-          { text: "\"Jangan bohong deh, ga lucu... masa?\"", oc: "Eric" },
-          { text: "\"Fans itu\"", oc: "Maverick" }
+          { text: "ngobrol, curhat, saling menyayangi, seperti couple sehat", oc: "Alex" },
+          { text: "bermesra-mesraan, cuddling, flirting, ciuman, couple freaky deh", oc: "Xen" },
+          { text: "ngedate, pergi kemana mana bareng, nonton bioskop", oc: "Eric" },
+          { text: "pokoknya selama pasangan nurut, hubungan jadi baik", oc: "Maverick" }
         ]
       },
       {
-        q: "Kamu kalo sama pasangan biasanya ngapain?",
+        question: "bububmu lagi freaky dan godain kamu, responmu gimana?",
         answers: [
-          { text: "Berusaha jadi yang terbaik buatnya, always jadi pendengar", oc: "Alex" },
-          { text: "CLINGY ABIES, goda-godain dia melulu, hobi ngajakin mesra", oc: "Xen" },
-          { text: "Yapping melulu, selalu ngajakin dia mabar njay", oc: "Eric" },
-          { text: "Goda dan nempel mulu juga (freaky)", oc: "Maverick" }
+          { text: "gas aja ga si", oc: "Xen" },
+          { text: "gas, cuman ga sampe lewati batas", oc: "Eric" },
+          { text: "tolak dengan lembut", oc: "Alex" },
+          { text: "kasur.", oc: "Maverick" }
         ]
       },
       {
-        q: "Kalo bububmu ngambek sama kamu, kamu ngapain?",
+        question: "bububmu marah sama kamu!",
         answers: [
-          { text: "Diemin dia dulu, lalu: \"kamu udah selesai marahnya? maaf ya kalo ada salah..\"", oc: "Alex" },
-          { text: "Berusaha hibur & gangguin dia: \"kamu marah karna apaa, maapin aku peliz\"", oc: "Xen" },
-          { text: "\"Bisa berhenti marah dan kasih tau kenapa kamu ngambek ga, ngerepotin tau\"", oc: "Maverick" },
-          { text: "Diemin, tapi dikit-dikit nanya salahmu apa", oc: "Eric" }
-        ]
-      },
-      {
-        q: "Bububmu lagi freaky nih, responmu gimana?",
-        answers: [
-          { text: "Gas aja ga si", oc: "Xen" },
-          { text: "Berusaha dingin, padahal aslinya mau banget", oc: "Eric" },
-          { text: "Tolak dengan lembut", oc: "Alex" }
-        ]
-      },
-      {
-        q: "Bububmu ketahuan selingkuh! Omaigat",
-        answers: [
-          { text: "Marahin dia, pokoknya murka bingit", oc: "Maverick" },
-          { text: "\"Uhm, aku juga sering gitu\"", oc: "Xen" },
-          { text: "Ngambek", oc: "Eric" },
-          { text: "Maafin dengan alasan jelas kenapa dia selingkuh", oc: "Alex" }
-        ]
-      },
-      {
-        q: "\"Kalo aku berubah jadi kecoak, kamu masih sayang aku ga?\"",
-        answers: [
-          { text: "\"Sayang ko! Asal aku juga jadi kecoak\"", oc: "Xen" },
-          { text: "\"Gajelas\"", oc: "Eric" },
-          { text: "\"Sorry, ku semprot pake baygon\"", oc: "Maverick" },
-          { text: "\"Iya, sayang. Tapi kenapa harus kecoak?\"", oc: "Alex" }
-        ]
-      },
-      {
-        q: "Kamu mau punya bubub kaya gimana?",
-        answers: [
-          { text: "Apa adanya, tapi harus FREAKY🤤", oc: "Xen" },
-          { text: "Cantik, seksi, menggoda, gyat zamn banyak mau lu", oc: "Maverick" },
-          { text: "Apa adanya yang penting ga nakal", oc: "Alex" },
-          { text: "Mboh, yang penting cantik", oc: "Eric" }
-        ]
-      },
-      {
-        q: "Menurutmu, kamu apa?",
-        answers: [
-          { text: "Orang biasa", oc: "Alex" },
-          { text: "Grin pleg", oc: "Eric" },
-          { text: "Gwehj red pleg tau", oc: "Maverick" },
-          { text: "Raja iblis", oc: "Xen" }
-        ]
-      },
-      {
-        q: "Menurutmu, kamu orangnya kaya gimana?",
-        answers: [
-          { text: "Dingin diluar, hangat didalam", oc: "Alex" },
-          { text: "Asik diluar, freaky didalam", oc: "Xen" },
-          { text: "Innocent diluar, freaky didalam", oc: "Maverick" }
+          { text: "ga terima, main tangan (pukul)", oc: "Maverick" },
+          { text: "berusaha buat ngehibur dia sambil \"ya maap :(\"", oc: "Xen" },
+          { text: "marahin balik, ga lama kemudian pasti minta maap", oc: "Eric" },
+          { text: "diem sampe dia udah berhenti emosi, ga lama kemudian \"sudah marahnya? maaf ya..\"", oc: "Alex" }
         ]
       }
     ];
 
-    const scores = { Alex: 0, Xen: 0, Eric: 0, Maverick: 0 };
-    let index = 0;
+    const results = {
+      "Xen": "Kamu adalah orang yang freaky, clingy, dan dirty minded. Tapi kamu juga penuh semangat dan gampang bikin suasana jadi hidup. Kalau udah nyaman sama seseorang, kamu bisa jadi pasangan paling mesra dan lucu!",
+      "Alex": "Kamu adalah sosok tenang, penyayang, dan pengertian. Terlihat dingin dari luar, tapi perhatian banget dan rela ngalah demi orang yang disayang. Kamu pasangan ideal yang dewasa dan sabar.",
+      "Eric": "Kamu terlihat cool dan agak cuek, tapi aslinya gampang baper dan perhatian. Kamu suka nunjukin rasa sayang lewat hal kecil kayak traktir atau ngajak main bareng. Agak badut tapi manis.",
+      "Maverick": "Kamu tipe black flag: dominan, misterius, dan kadang kasar. Tapi kamu punya sisi posesif yang berarti kamu sangat protektif ke orang yang kamu sayang. Di balik kesan galakmu, ada rasa sayang yang dalam."
+    };
 
-    const questionBox = document.getElementById("question");
-    const answerBox = document.getElementById("answers");
-    const resultBox = document.getElementById("result");
+    let currentQuestion = 0;
+    const score = {
+      "Xen": 0,
+      "Alex": 0,
+      "Eric": 0,
+      "Maverick": 0
+    };
+
+    function startQuiz() {
+      document.getElementById("start").style.display = "none";
+      document.getElementById("quiz").style.display = "block";
+      showQuestion();
+    }
 
     function showQuestion() {
-      if (index < questions.length) {
-        const current = questions[index];
-        questionBox.innerText = current.q;
-        answerBox.innerHTML = "";
-        current.answers.forEach(answer => {
-          const btn = document.createElement("button");
-          btn.innerText = answer.text;
-          btn.onclick = () => {
-            scores[answer.oc]++;
-            index++;
-            showQuestion();
-          };
-          answerBox.appendChild(btn);
-        });
+      const quizEl = document.getElementById("quiz");
+      const q = quizData[currentQuestion];
+      quizEl.innerHTML = `<div class='question-box'><p>${q.question}</p></div><div class='answers'>`;
+      q.answers.forEach((a, i) => {
+        quizEl.innerHTML += `<button onclick='selectAnswer("${a.oc}")'>${a.text}</button>`;
+      });
+      quizEl.innerHTML += `</div>`;
+    }
+
+    function selectAnswer(oc) {
+      score[oc]++;
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        showQuestion();
       } else {
         showResult();
       }
@@ -172,52 +136,10 @@
 
     function showResult() {
       document.getElementById("quiz").style.display = "none";
-      const maxScore = Math.max(...Object.values(scores));
-      const oc = Object.keys(scores).find(key => scores[key] === maxScore);
-      let desc = "";
-
-      if (oc === "Xen") {
-        desc = `
-          <div class="oc-desc">
-            <h3>— Xen Vince Reviano Rachel</h3>
-            <p>1. Kamu adalah orang yang usil, ngeselin, FREAKY BGT, dan dirty minded.<br>
-            2. Terlalu clingy sama orang yang sudah dianggap nyaman.<br>
-            3. Kepedean.</p>
-          </div>
-        `;
-      } else if (oc === "Alex") {
-        desc = `
-          <div class="oc-desc">
-            <h3>— Alejandro Lorenzo Alex Amberlynn</h3>
-            <p>1. Kamu adalah orang yang sungguh dingin, padahal di dalam perhatian dan caring.<br>
-            2. Selalu berusaha jadi yang terbaik.<br>
-            3. Ga peduli kekurangan, yang penting cinta.</p>
-          </div>
-        `;
-      } else if (oc === "Eric") {
-        desc = `
-          <div class="oc-desc">
-            <h3>— Eric HarperWood Theodore</h3>
-            <p>1. Berusaha dingin, padahal hatimu lembut.<br>
-            2. Suka jadi badut, perhatian ke orang yang deket.<br>
-            3. Keras di luar, lembut di dalam, pengen disayang.</p>
-          </div>
-        `;
-      } else if (oc === "Maverick") {
-        desc = `
-          <div class="oc-desc">
-            <h3>— Camden Maverick Maximilian</h3>
-            <p>1. Kamu terlihat kasar dan jahat, tapi juga freaky!<br>
-            2. Egois, sering mikirin diri sendiri.<br>
-            3. Kasar ke orang lain, tapi lembut ke orang tersayang. Kadang ga terima kalau mereka marah ke kamu.</p>
-          </div>
-        `;
-      }
-
-      resultBox.innerHTML = `Kamu mirip: <strong>${oc}</strong>! ${desc}`;
+      document.getElementById("result").style.display = "block";
+      let final = Object.entries(score).sort((a, b) => b[1] - a[1])[0][0];
+      document.getElementById("result").innerHTML = `<h2>Kamu mirip ${final}!</h2><p>${results[final]}</p>`;
     }
-
-    showQuestion();
   </script>
 </body>
 </html>
