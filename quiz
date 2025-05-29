@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz OC: Kamu Mirip Siapa?</title>
+  <style>
+    body {
+      background-color: #d8f3dc; /* hijau pastel */
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #ffffffcc;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #2d6a4f;
+    }
+    button {
+      background-color: #95d5b2;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Kamu Mirip OC Siapa?</h1>
+    <p>Pilih jawaban yang paling menggambarkan kamu!</p>
+    <div id="quiz">
+      <p>1. Kamu kalo punya crush biasanya...</p>
+      <button onclick="choose('Alex')">Diem ae, kalo ada waktu kamu selalu doain dia</button>
+      <button onclick="choose('Xen')">Langsung ajakin kenalan, minta nomor, atau bahkan godain mereka😳</button>
+      <button onclick="choose('Eric')">Santai aja, terkadang selalu berusaha buat dapetin perhatiannya</button>
+      <button onclick="choose('Cyndreyn')">Selalu salting kalo ada dia, apalagi saat tatap-tatapan</button
+      <button onclick="choose('Maverick')">Gamau ngaku kalo kamu punya crush</button
+  </div>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function choose(character) {
+      let result = document.getElementById('result');
+      result.textContent = 'Kamu mirip dengan: ' + character + '!';
+    }
+  </script>
+</body>
+</html>
